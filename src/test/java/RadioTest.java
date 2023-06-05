@@ -18,7 +18,7 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldNotSetCurrentStationIfStationIsGreaterThanNine() {
+    public void shouldNotSetCurrentStationIfStationIsEqualToMaxStation() {
         Radio radio = new Radio();
         radio.setCurrentStation(10);
         assertEquals(0, radio.getCurrentStation());
@@ -37,11 +37,11 @@ public class RadioTest {
     @Test
     public void shouldSwitchToPreviousStation() {
         Radio radio = new Radio();
-        radio.setCurrentStation(1);
-        radio.prevStation();
-        assertEquals(0, radio.getCurrentStation());
+        radio.setCurrentStation(0);
         radio.prevStation();
         assertEquals(9, radio.getCurrentStation());
+        radio.prevStation();
+        assertEquals(8, radio.getCurrentStation());
     }
 
     @Test
@@ -73,5 +73,39 @@ public class RadioTest {
         radio.setCurrentVolume(0);
         radio.decreaseVolume();
         assertEquals(0, radio.getCurrentVolume());
+    }
+
+    @Test
+    public void shouldSetCurrentStationWithCustomMaxStation() {
+        Radio radio = new Radio(20);
+        radio.setCurrentStation(15);
+        assertEquals(15, radio.getCurrentStation());
+    }
+
+    @Test
+    public void shouldNotSetCurrentStationIfStationIsEqualToMaxStationWithCustomMaxStation() {
+        Radio radio = new Radio(20);
+        radio.setCurrentStation(20);
+        assertEquals(0, radio.getCurrentStation());
+    }
+
+    @Test
+    public void shouldSwitchToNextStationWithCustomMaxStation() {
+        Radio radio = new Radio(20);
+        radio.setCurrentStation(18);
+        radio.nextStation();
+        assertEquals(19, radio.getCurrentStation());
+        radio.nextStation();
+        assertEquals(0, radio.getCurrentStation());
+    }
+
+    @Test
+    public void shouldSwitchToPreviousStationWithCustomMaxStation() {
+        Radio radio = new Radio(20);
+        radio.setCurrentStation(0);
+        radio.prevStation();
+        assertEquals(19, radio.getCurrentStation());
+        radio.prevStation();
+        assertEquals(18, radio.getCurrentStation());
     }
 }
