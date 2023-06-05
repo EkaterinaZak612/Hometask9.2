@@ -1,30 +1,21 @@
 public class Radio {
     private int currentStation;
-    private int minStation;
     private int currentVolume;
     private int maxStation;
-    private final int MAX_VOLUME = 100;
-    private final int MIN_VOLUME = 0;
 
     public Radio() {
-        this.maxStation = 4; // По умолчанию 5 станций (индексация с 0 до 4)
-        this.minStation = 0; // По умолчанию минимальная станция 0
+        this.maxStation = 10; // Значение по умолчанию
     }
+
     public Radio(int maxStation) {
-        this.currentStation = 0;
-        this.minStation = 0;
-        this.maxStation = maxStation - 1;
         this.maxStation = maxStation;
     }
 
     public void setCurrentStation(int station) {
-        if (station < minStation) {
-            this.currentStation = minStation;
-        } else if (station > maxStation) {
-            this.currentStation = maxStation;
-        } else {
-            currentStation = station;
+        if (station < 0 || station >= maxStation) {
+            return;
         }
+        currentStation = station;
     }
 
     public int getCurrentStation() {
@@ -33,9 +24,9 @@ public class Radio {
 
     public void nextStation() {
         if (currentStation == maxStation - 1) {
-            currentStation = 0; // Переключение на первую станцию
+            currentStation = 0;
         } else {
-            currentStation++; // Переключение на следующую станцию
+            currentStation++;
         }
     }
 
@@ -48,13 +39,13 @@ public class Radio {
     }
 
     public void increaseVolume() {
-        if (currentVolume < MAX_VOLUME) {
+        if (currentVolume < 100) {
             currentVolume++;
         }
     }
 
     public void decreaseVolume() {
-        if (currentVolume > MIN_VOLUME) {
+        if (currentVolume > 0) {
             currentVolume--;
         }
     }
@@ -63,17 +54,7 @@ public class Radio {
         return currentVolume;
     }
 
-    public void setCurrentVolume(int volume) {
-        if (volume > MAX_VOLUME) {
-            currentVolume = MAX_VOLUME;
-        } else if (volume < MIN_VOLUME) {
-            currentVolume = MIN_VOLUME;
-        } else {
-            currentVolume = volume;
-        }
-    }
-
-    public int getMaxStation() {
-        return maxStation;
+    public void setCurrentVolume(int currentVolume) {
+        this.currentVolume = currentVolume;
     }
 }
